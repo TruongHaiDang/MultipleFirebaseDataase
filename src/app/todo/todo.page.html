@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button (click)="openMenu()">
+      <ion-icon slot="icon-only" name="reorder-three"></ion-icon>
+    </ion-button>
+    <ion-title>todo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu side="start" menuId="menu" contentId="main">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item (click)="logOut()">Log out</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-router-outlet id="main"></ion-router-outlet>
+
+<ion-content>
+  <form>    
+    <ion-item lines="full">
+      <ion-label position="floating">Name</ion-label>
+      <ion-input id="name" type="text" #name required></ion-input>
+    </ion-item> 
+
+    <ion-item lines="full">
+      <ion-label position="floating">Price</ion-label>
+      <ion-input id="price" type="text" #price required></ion-input>
+    </ion-item>
+
+    <ion-row>
+      <ion-col> 
+      <ion-button (click)="addDocs(name, price)" type="submit" expand="block">AddDocs</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col> 
+      <ion-button (click)="pushDocs(name, price)" type="submit" expand="block">PushDocs</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

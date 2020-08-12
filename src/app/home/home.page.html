@@ -24,14 +24,14 @@
         <ion-label position="floating">Password</ion-label>
         <ion-input type="password" #password required></ion-input>
       </ion-item>
-  
+
       <ion-row>
         <ion-col> 
         <ion-button type="submit" (click)="logIn(email, password)" expand="block">Login</ion-button>
         </ion-col>
       </ion-row>
     </form>
-  
+
     <ion-item>
       <ion-label>Change Database</ion-label>
       <ion-toggle [(ngModel)]="databaseChanged"></ion-toggle>

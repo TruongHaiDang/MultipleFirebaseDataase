@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {ENV, ENV_CONFIG} from '../env';
 import {AngularFirestore} from '@angular/fire/firestore';
 import {AngularFireAuth} from '@angular/fire/auth';
+import { AngularFireDatabase } from '@angular/fire/database';
 
 export function AngularFirestoreFactory(platformId: any, zone: NgZone, env: ENV, projectId: string) {
   return new AngularFirestore(env.firebaseConfig[projectId], projectId, false, null, platformId, zone, null);
@@ -10,6 +11,10 @@ export function AngularFirestoreFactory(platformId: any, zone: NgZone, env: ENV,
 
 export function AngularFireAuthFactory(platformId: any, zone: NgZone, env: ENV, projectId: string) {
   return new AngularFireAuth(env.firebaseConfig[projectId], projectId, platformId, zone);
+}
+
+export function AngularFireDatabaseFactory(platformId: any, zone: NgZone, env: ENV, projectId: string) {
+  return new AngularFireDatabase(env.firebaseConfig[projectId], projectId, platformId, zone);
 }
 
 export const FIREBASE_PROJECT_ONE = new InjectionToken('firebase project injector');
@@ -20,6 +25,8 @@ export const FIREBASE_REFERENCES = {
   TWO_FIRESTORE: 'project-two-firestore',
   ONE_FIREAUTH: 'project-one-fireauth',
   TWO_FIREAUTH: 'project-two-fireauth',
+  ONE_REALDATA: 'project-one-realdata',
+  TWO_REALDATA: 'project-two-realdata',
 };
 
 @NgModule({
@@ -46,6 +53,16 @@ export const FIREBASE_REFERENCES = {
       provide: FIREBASE_REFERENCES.TWO_FIREAUTH,
       deps: [PLATFORM_ID, NgZone, ENV_CONFIG, FIREBASE_PROJECT_TWO],
       useFactory: AngularFireAuthFactory
+    },
+    {
+      provide: FIREBASE_REFERENCES.ONE_REALDATA,
+      deps: [PLATFORM_ID, NgZone, ENV_CONFIG, FIREBASE_PROJECT_ONE],
+      useFactory: AngularFireAuthFactory
+    },
+    {
+      provide: FIREBASE_REFERENCES.TWO_REALDATA,
+      deps: [PLATFORM_ID, NgZone, ENV_CONFIG, FIREBASE_PROJECT_TWO],
+      useFactory: AngularFireDatabaseFactory
     }
   ],
   imports: [
