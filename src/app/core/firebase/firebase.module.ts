@@ -14,7 +14,7 @@ export function AngularFireAuthFactory(platformId: any, zone: NgZone, env: ENV, 
 }
 
 export function AngularFireDatabaseFactory(platformId: any, zone: NgZone, env: ENV, projectId: string) {
-  return new AngularFireDatabase(env.firebaseConfig[projectId], projectId, platformId, zone);
+  return new AngularFireDatabase(env.firebaseConfig[projectId], projectId, undefined, platformId, zone);
 }
 
 export const FIREBASE_PROJECT_ONE = new InjectionToken('firebase project injector');
@@ -57,7 +57,7 @@ export const FIREBASE_REFERENCES = {
     {
       provide: FIREBASE_REFERENCES.ONE_REALDATA,
       deps: [PLATFORM_ID, NgZone, ENV_CONFIG, FIREBASE_PROJECT_ONE],
-      useFactory: AngularFireAuthFactory
+      useFactory: AngularFireDatabaseFactory
     },
     {
       provide: FIREBASE_REFERENCES.TWO_REALDATA,
