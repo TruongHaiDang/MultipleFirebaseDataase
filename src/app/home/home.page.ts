@@ -6,6 +6,7 @@ import {FIREBASE_REFERENCES} from '../core/firebase/firebase.module';
 import {AngularFireAuth} from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { TodoPage } from '../todo/todo.page';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-home',
@@ -19,8 +20,17 @@ export class HomePage {
     @Inject(FIREBASE_REFERENCES.ONE_FIREAUTH) private readonly firstDb: AngularFireAuth,
     @Inject(FIREBASE_REFERENCES.TWO_FIREAUTH) private readonly secondDb: AngularFireAuth,
     private router: Router,
+    private storage: Storage
   ) {
+    storage.get('databaseChanged').then((val) => {
+      this.databaseChanged = val;
+    });
     this.firstDb.onAuthStateChanged((user) => {
+      if(user) {
+        this.router.navigate(["/todo"], {state: {data: {databaseChanged: this.databaseChanged}}});
+      }
+    });
+    this.secondDb.onAuthStateChanged((user) => {
       if(user) {
         this.router.navigate(["/todo"], {state: {data: {databaseChanged: this.databaseChanged}}});
       }
@@ -28,6 +38,7 @@ export class HomePage {
   }
 
   logIn(email, password) {
+    this.storage.set('databaseChanged', this.databaseChanged);
     if(this.databaseChanged == false) {
       this.firstDb.signInWithEmailAndPassword(email.value, password.value)
       .then((res) => {
